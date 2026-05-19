@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Maio Laranja — Proteção à Infância</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --laranja:       #FF6B00;
+      --laranja-claro: #FF9A3C;
+      --laranja-pale:  #FFF3E8;
+      --escuro:        #1A0A00;
+      --medio:         #5C3300;
+      --branco:        #FFFDF9;
+      --cinza:         #9E7A5C;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--branco);
+      color: var(--escuro);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ─── GRAIN OVERLAY ─────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 1000; mix-blend-mode: multiply;
+    }
+
+    /* ─── NAV ────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: rgba(255,253,249,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,107,0,0.15);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900; font-size: 1.35rem;
+      color: var(--laranja);
+      letter-spacing: -0.5px;
+    }
+    .nav-logo span { color: var(--escuro); }
+
+    nav ul {
+      list-style: none; display: flex; gap: 2.5rem;
+    }
+    nav ul a {
+      text-decoration: none; font-size: 0.85rem; font-weight: 500;
+      color: var(--medio); letter-spacing: 0.06em; text-transform: uppercase;
+      transition: color .25s;
+    }
+    nav ul a:hover { color: var(--laranja); }
+
+    .nav-cta {
+      background: var(--laranja); color: #fff !important;
+      padding: .55rem 1.4rem; border-radius: 2rem;
+      transition: background .25s, transform .2s !important;
+    }
+    .nav-cta:hover { background: var(--laranja-claro) !important; transform: translateY(-2px); }
+
+    /* ─── HERO ───────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 7rem 3rem 4rem;
+      position: relative; overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 60% 70% at 80% 50%, rgba(255,154,60,0.18) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 40% at 10% 80%, rgba(255,107,0,0.10) 0%, transparent 60%);
+    }
+
+    /* Big decorative circle */
+    .hero-bg::after {
+      content: '';
+      position: absolute; right: -8vw; top: 50%;
+      transform: translateY(-50%);
+      width: 55vw; height: 55vw;
+      border-radius: 50%;
+      border: 2px solid rgba(255,107,0,0.12);
+      animation: spin-slow 40s linear infinite;
+    }
+
+    @keyframes spin-slow {
+      from { transform: translateY(-50%) rotate(0deg); }
+      to   { transform: translateY(-50%) rotate(360deg); }
+    }
+
+    .hero-content { position: relative; z-index: 1; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--laranja-pale); border: 1px solid rgba(255,107,0,0.2);
+      color: var(--laranja); font-size: .75rem; font-weight: 500;
+      padding: .4rem 1rem; border-radius: 2rem; letter-spacing: .08em;
+      text-transform: uppercase; margin-bottom: 2rem;
+      animation: fadeUp .8s ease both;
+    }
+    .hero-badge::before { content: '●'; font-size: .6rem; animation: pulse 1.5s ease infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 900; line-height: 1.05;
+      letter-spacing: -2px;
+      animation: fadeUp .9s .1s ease both;
+    }
+
+    .hero h1 em {
+      font-style: normal; color: var(--laranja);
+      position: relative;
+    }
+    .hero h1 em::after {
+      content: '';
+      position: absolute; left: 0; bottom: .08em; right: 0;
+      height: .12em; background: var(--laranja-claro); z-index: -1;
+      opacity: .35;
+    }
+
+    .hero-sub {
+      margin-top: 1.8rem;
+      font-size: 1.05rem; line-height: 1.7;
+      color: var(--medio); max-width: 480px;
+      animation: fadeUp .9s .2s ease both;
+    }
+
+    .hero-actions {
+      margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap;
+      animation: fadeUp .9s .3s ease both;
+    }
+
+    .btn {
+      display: inline-block; padding: .85rem 2rem;
+      border-radius: 2rem; font-size: .9rem; font-weight: 500;
+      text-decoration: none; transition: all .25s; cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--laranja); color: #fff;
+      box-shadow: 0 8px 30px rgba(255,107,0,.30);
+    }
+    .btn-primary:hover { background: #e05a00; transform: translateY(-3px); box-shadow: 0 14px 40px rgba(255,107,0,.40); }
+    .btn-outline {
+      border: 1.5px solid var(--laranja); color: var(--laranja); background: transparent;
+    }
+    .btn-outline:hover { background: var(--laranja-pale); }
+
+    /* Floating ribbon art */
+    .hero-visual {
+      position: relative; z-index: 1;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .ribbon-wrap {
+      position: relative; width: min(380px, 40vw); aspect-ratio: 1;
+      animation: float 5s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-18px)} }
+
+    .ribbon-wrap svg { width: 100%; height: 100%; }
+
+    .stat-pill {
+      position: absolute;
+      background: #fff; border-radius: 1rem;
+      padding: .8rem 1.2rem;
+      box-shadow: 0 8px 30px rgba(0,0,0,.10);
+      display: flex; flex-direction: column; gap: .1rem;
+    }
+    .stat-pill strong { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--laranja); }
+    .stat-pill span { font-size: .72rem; color: var(--cinza); }
+
+    .sp1 { bottom: 8%; left: -10%; animation: fadeUp .9s .5s ease both; }
+    .sp2 { top: 5%; right: -8%; animation: fadeUp .9s .6s ease both; }
+
+    /* ─── SECTION SHARED ─────────────────────────────── */
+    section { padding: 6rem 3rem; }
+
+    .section-tag {
+      font-size: .72rem; font-weight: 500; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--laranja);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem); font-weight: 700;
+      line-height: 1.15; letter-spacing: -1px;
+      max-width: 600px;
+    }
+
+    /* ─── ABOUT ──────────────────────────────────────── */
+    #sobre {
+      background: var(--escuro); color: var(--branco);
+      position: relative; overflow: hidden;
+    }
+    #sobre::before {
+      content: 'MAIO';
+      position: absolute; right: -2rem; top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Playfair Display', serif;
+      font-size: 18rem; font-weight: 900;
+      color: rgba(255,107,0,0.06); line-height: 1;
+      pointer-events: none; user-select: none;
+    }
+
+    #sobre .section-title { color: var(--branco); max-width: 700px; }
+    #sobre .section-tag { color: var(--laranja-claro); }
+
+    .sobre-grid {
+      margin-top: 3rem;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2rem; align-items: start;
+      position: relative; z-index: 1;
+    }
+
+    .sobre-text p {
+      font-size: 1.05rem; line-height: 1.75; color: rgba(255,253,249,0.75);
+      margin-bottom: 1.2rem;
+    }
+    .sobre-text p strong { color: var(--laranja-claro); font-weight: 500; }
+
+    .sobre-cards {
+      display: flex; flex-direction: column; gap: 1.2rem;
+    }
+
+    .sobre-card {
+      background: rgba(255,107,0,0.08);
+      border: 1px solid rgba(255,107,0,0.18);
+      border-radius: 1rem; padding: 1.5rem;
+      transition: background .25s;
+    }
+    .sobre-card:hover { background: rgba(255,107,0,0.14); }
+    .sobre-card h3 { font-size: 1rem; margin-bottom: .5rem; color: var(--laranja-claro); }
+    .sobre-card p  { font-size: .88rem; color: rgba(255,253,249,.65); line-height: 1.6; }
+
+    /* ─── SINAIS ─────────────────────────────────────── */
+    #sinais { background: var(--laranja-pale); }
+
+    .sinais-grid {
+      margin-top: 3rem;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
+      gap: 1.5rem;
+    }
+
+    .sinal-card {
+      background: #fff; border-radius: 1.2rem; padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,.06);
+      border-top: 4px solid var(--laranja);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .sinal-card:hover { transform: translateY(-6px); box-shadow: 0 14px 40px rgba(255,107,0,.15); }
+
+    .sinal-icon {
+      width: 3rem; height: 3rem; border-radius: .75rem;
+      background: var(--laranja); display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin-bottom: 1.2rem;
+    }
+
+    .sinal-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: .6rem; }
+    .sinal-card p  { font-size: .875rem; line-height: 1.65; color: var(--medio); }
+
+    /* ─── NÚMEROS ─────────────────────────────────────── */
+    #numeros {
+      background: var(--branco);
+      text-align: center;
+    }
+
+    .numeros-grid {
+      margin-top: 3.5rem;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+      gap: 2rem;
+    }
+
+    .numero-item {
+      display: flex; flex-direction: column; align-items: center; gap: .4rem;
+    }
+
+    .numero-val {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem; font-weight: 900; color: var(--laranja);
+      line-height: 1;
+    }
+
+    .numero-label {
+      font-size: .85rem; color: var(--medio); max-width: 160px; line-height: 1.4;
+    }
+
+    .numero-divider { width: 2rem; height: 3px; background: var(--laranja); border-radius: 2px; }
+
+    /* ─── COMO AJUDAR ─────────────────────────────────── */
+    #ajudar {
+      background: var(--escuro); color: var(--branco);
+    }
+    #ajudar .section-title { color: var(--branco); }
+    #ajudar .section-tag { color: var(--laranja-claro); }
+
+    .ajudar-grid {
+      margin-top: 3rem;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
+      gap: 1.5rem;
+    }
+
+    .ajudar-card {
+      position: relative; overflow: hidden;
+      border-radius: 1.2rem; padding: 2rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,107,0,0.15);
+      transition: all .3s;
+    }
+    .ajudar-card:hover {
+      background: rgba(255,107,0,0.1);
+      border-color: rgba(255,107,0,.4);
+      transform: translateY(-4px);
+    }
+
+    .ajudar-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem; font-weight: 900;
+      color: rgba(255,107,0,0.18);
+      position: absolute; top: .8rem; right: 1.2rem; line-height: 1;
+    }
+
+    .ajudar-card h3 { font-size: 1rem; margin-bottom: .7rem; color: var(--laranja-claro); }
+    .ajudar-card p  { font-size: .875rem; line-height: 1.65; color: rgba(255,253,249,.65); }
+
+    /* ─── DENÚNCIA / CTA ─────────────────────────────── */
+    #denuncia {
+      background: var(--laranja);
+      text-align: center; position: relative; overflow: hidden;
+    }
+
+    #denuncia::before, #denuncia::after {
+      content: ''; position: absolute;
+      border-radius: 50%; border: 2px solid rgba(255,255,255,.15);
+    }
+    #denuncia::before { width: 60vw; height: 60vw; left: -20vw; top: -20vw; }
+    #denuncia::after  { width: 40vw; height: 40vw; right: -10vw; bottom: -15vw; }
+
+    #denuncia .section-tag { color: rgba(255,255,255,.7); }
+
+    #denuncia .section-title {
+      color: #fff; max-width: 700px; margin: 0 auto;
+    }
+
+    #denuncia .phone {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(4rem, 10vw, 8rem); font-weight: 900;
+      color: #fff; line-height: 1;
+      margin: 1.5rem 0; text-shadow: 0 8px 40px rgba(0,0,0,.25);
+      position: relative; z-index: 1;
+    }
+
+    #denuncia .phone-sub {
+      color: rgba(255,255,255,.8); font-size: 1rem; margin-bottom: 2.5rem;
+      position: relative; z-index: 1;
+    }
+
+    .btn-white {
+      background: #fff; color: var(--laranja);
+      font-weight: 600; position: relative; z-index: 1;
+      box-shadow: 0 8px 30px rgba(0,0,0,.2);
+    }
+    .btn-white:hover { background: var(--laranja-pale); transform: translateY(-3px); }
+
+    /* ─── FOOTER ─────────────────────────────────────── */
+    footer {
+      background: var(--escuro); color: rgba(255,253,249,.5);
+      padding: 3rem; display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    }
+
+    footer .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900; font-size: 1.1rem; color: var(--laranja);
+    }
+    footer p { font-size: .8rem; }
+    footer a { color: var(--laranja-claro); text-decoration: none; }
+
+    /* ─── ANIMATIONS ─────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ─── RESPONSIVE ─────────────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      nav ul { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; }
+      .hero-visual { display: none; }
+      .sobre-grid { grid-template-columns: 1fr; }
+      section { padding: 4rem 1.5rem; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Maio<span>Laranja</span></div>
+  <ul>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#sinais">Sinais</a></li>
+    <li><a href="#numeros">Dados</a></li>
+    <li><a href="#ajudar">Como Ajudar</a></li>
+    <li><a href="#denuncia" class="nav-cta">Denunciar</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-bg"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">Campanha Nacional · Maio 2025</div>
+    <h1>Proteger a <em>infância</em><br>é dever de todos.</h1>
+    <p class="hero-sub">
+      O Maio Laranja une o Brasil no combate ao abuso e à exploração sexual
+      de crianças e adolescentes. Informação, prevenção e denúncia salvam vidas.
+    </p>
+    <div class="hero-actions">
+      <a href="#denuncia" class="btn btn-primary">Saiba como denunciar</a>
+      <a href="#sobre" class="btn btn-outline">Conheça a campanha</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="ribbon-wrap">
+      <!-- Laço Laranja SVG -->
+      <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Glow -->
+        <defs>
+          <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#FF9A3C" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#FF6B00" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="blur">
+            <feGaussianBlur stdDeviation="8"/>
+          </filter>
+        </defs>
+        <circle cx="150" cy="150" r="130" fill="url(#glow)"/>
+        <!-- Laço esquerdo -->
+        <path d="M150 155 C120 140, 60 100, 70 60 C78 30, 120 28, 140 55 C155 70, 152 100, 150 120"
+              fill="#FF6B00" opacity="0.95"/>
+        <!-- Laço direito -->
+        <path d="M150 155 C180 140, 240 100, 230 60 C222 30, 180 28, 160 55 C145 70, 148 100, 150 120"
+              fill="#FF9A3C" opacity="0.95"/>
+        <!-- Nó -->
+        <ellipse cx="150" cy="138" rx="16" ry="22" fill="#E05500"/>
+        <!-- Cauda esquerda -->
+        <path d="M150 156 C138 172, 118 210, 105 250 C100 265, 112 272, 122 260 C135 242, 148 200, 150 180"
+              fill="#FF6B00" opacity="0.95"/>
+        <!-- Cauda direita -->
+        <path d="M150 156 C162 172, 182 210, 195 250 C200 265, 188 272, 178 260 C165 242, 152 200, 150 180"
+              fill="#FF9A3C" opacity="0.95"/>
+        <!-- Brilho -->
+        <path d="M132 72 C134 60, 140 50, 148 48" stroke="rgba(255,255,255,0.4)" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+
+      <div class="stat-pill sp1">
+        <strong>100 mil</strong>
+        <span>denúncias/ano</span>
+      </div>
+      <div class="stat-pill sp2">
+        <strong>Disque 100</strong>
+        <span>24h · Gratuito</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="section-tag">A Campanha</div>
+  <h2 class="section-title reveal">O que é o Maio Laranja?</h2>
+
+  <div class="sobre-grid">
+    <div class="sobre-text reveal">
+      <p>
+        O <strong>Maio Laranja</strong> é uma campanha nacional criada para mobilizar a
+        sociedade brasileira no combate ao abuso e à exploração sexual de crianças e
+        adolescentes. A cor laranja representa a urgência e o alerta constante.
+      </p>
+      <p>
+        Instituído pela <strong>Lei Federal 13.431/2017</strong>, o movimento ganhou força
+        em todo o país, reunindo governos, escolas, empresas e cidadãos em torno de
+        uma causa que não pode esperar.
+      </p>
+      <p>
+        Falar sobre o tema é o primeiro passo. Quando adultos e comunidades se
+        informam, crianças ficam mais seguras.
+      </p>
+    </div>
+
+    <div class="sobre-cards">
+      <div class="sobre-card reveal">
+        <h3>📅 Por que em maio?</h3>
+        <p>O dia 18 de maio é o Dia Nacional de Combate ao Abuso e à Exploração Sexual de Crianças e Adolescentes, data que marca tragédias e também resistência.</p>
+      </div>
+      <div class="sobre-card reveal">
+        <h3>🔶 O símbolo laranja</h3>
+        <p>A cor e o laço representam o alerta, a energia e o compromisso coletivo de proteger quem ainda não pode se defender sozinho.</p>
+      </div>
+      <div class="sobre-card reveal">
+        <h3>⚖️ Base legal</h3>
+        <p>O Estatuto da Criança e do Adolescente (ECA) e a Lei 13.431 garantem proteção integral e obrigam a notificação de casos suspeitos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SINAIS DE ALERTA -->
+<section id="sinais">
+  <div class="section-tag">Reconheça</div>
+  <h2 class="section-title reveal">Sinais de alerta</h2>
+  <p class="reveal" style="margin-top:1rem;color:var(--medio);max-width:540px;line-height:1.7;">
+    Mudanças de comportamento podem ser pistas importantes. Fique atento e, na dúvida, converse e denuncie.
+  </p>
+
+  <div class="sinais-grid">
+    <div class="sinal-card reveal">
+      <div class="sinal-icon">😔</div>
+      <h3>Isolamento repentino</h3>
+      <p>A criança se afasta de amigos e familiares, evita lugares que antes frequentava.</p>
+    </div>
+    <div class="sinal-card reveal">
+      <div class="sinal-icon">😴</div>
+      <h3>Alterações de sono</h3>
+      <p>Pesadelos frequentes, medo do escuro, resistência em dormir sozinha ou insônia persistente.</p>
+    </div>
+    <div class="sinal-card reveal">
+      <div class="sinal-icon">📚</div>
+      <h3>Queda no rendimento</h3>
+      <p>Desinteresse na escola, faltas frequentes e dificuldade de concentração sem causa aparente.</p>
+    </div>
+    <div class="sinal-card reveal">
+      <div class="sinal-icon">🙅</div>
+      <h3>Rejeição a pessoas</h3>
+      <p>Medo ou relutância em ficar com determinado adulto, mesmo familiar próximo.</p>
+    </div>
+    <div class="sinal-card reveal">
+      <div class="sinal-icon">🤕</div>
+      <h3>Queixas físicas</h3>
+      <p>Dores sem causa médica identificada, especialmente abdominais ou na região genital.</p>
+    </div>
+    <div class="sinal-card reveal">
+      <div class="sinal-icon">🗣️</div>
+      <h3>Linguagem inadequada</h3>
+      <p>Uso de termos ou comportamentos sexuais inapropriados para a idade da criança.</p>
+    </div>
+  </div>
+</section>
+
+<!-- NÚMEROS -->
+<section id="numeros">
+  <div class="section-tag">Dados que pedem ação</div>
+  <h2 class="section-title reveal" style="margin:0 auto;">A realidade em números</h2>
+
+  <div class="numeros-grid">
+    <div class="numero-item reveal">
+      <div class="numero-val">76%</div>
+      <div class="numero-divider"></div>
+      <div class="numero-label">dos casos ocorrem dentro de casa ou por familiar</div>
+    </div>
+    <div class="numero-item reveal">
+      <div class="numero-val">100</div>
+      <div class="numero-divider"></div>
+      <div class="numero-label">é o número do Disque Direitos Humanos, gratuito e sigiloso</div>
+    </div>
+    <div class="numero-item reveal">
+      <div class="numero-val">1 em 4</div>
+      <div class="numero-divider"></div>
+      <div class="numero-label">meninas e 1 em 13 meninos sofrem algum tipo de abuso</div>
+    </div>
+    <div class="numero-item reveal">
+      <div class="numero-val">87%</div>
+      <div class="numero-divider"></div>
+      <div class="numero-label">dos casos não são denunciados por medo e vergonha</div>
+    </div>
+  </div>
+  <p class="reveal" style="margin-top:2.5rem;color:var(--cinza);font-size:.8rem;">
+    Fontes: UNICEF Brasil, Ouvidoria Nacional de Direitos Humanos, ABRAPIA.
+  </p>
+</section>
+
+<!-- COMO AJUDAR -->
+<section id="ajudar">
+  <div class="section-tag">Sua parte</div>
+  <h2 class="section-title reveal">Como você pode agir</h2>
+
+  <div class="ajudar-grid">
+    <div class="ajudar-card reveal">
+      <div class="ajudar-num">01</div>
+      <h3>Informe-se</h3>
+      <p>Conheça os sinais de alerta, as leis e os direitos das crianças. Conhecimento é proteção.</p>
+    </div>
+    <div class="ajudar-card reveal">
+      <div class="ajudar-num">02</div>
+      <h3>Converse</h3>
+      <p>Fale com crianças e adolescentes sobre limites corporais, confiança e segurança, de forma leve e acolhedora.</p>
+    </div>
+    <div class="ajudar-card reveal">
+      <div class="ajudar-num">03</div>
+      <h3>Denuncie</h3>
+      <p>Se suspeitar de abuso, ligue para o Disque 100. A denúncia é anônima, gratuita e obrigatória por lei.</p>
+    </div>
+    <div class="ajudar-card reveal">
+      <div class="ajudar-num">04</div>
+      <h3>Compartilhe</h3>
+      <p>Divulgue a campanha, use a cor laranja e mostre que toda a comunidade está de olho.</p>
+    </div>
+    <div class="ajudar-card reveal">
+      <div class="ajudar-num">05</div>
+      <h3>Apoie</h3>
+      <p>Engaje-se com organizações locais de proteção à infância. Voluntariado e doações fazem diferença.</p>
+    </div>
+    <div class="ajudar-card reveal">
+      <div class="ajudar-num">06</div>
+      <h3>Acolha</h3>
+      <p>Se uma criança se abrir com você, acredite nela. Não julgue. Encaminhe ao atendimento adequado.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DENÚNCIA CTA -->
+<section id="denuncia">
+  <div class="section-tag">Proteja agora</div>
+  <h2 class="section-title">Suspeita de abuso?<br>Denuncie já.</h2>
+  <div class="phone">Disque 100</div>
+  <p class="phone-sub">Gratuito · Sigiloso · 24 horas por dia · 7 dias por semana</p>
+  <a href="tel:100" class="btn btn-white">Ligar agora &rarr;</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">MaioLaranja</div>
+  <p>Campanha de utilidade pública · <a href="#">Política de privacidade</a></p>
+  <p>🧡 Todo adulto é responsável por toda criança.</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => io.observe(r));
+
+  // Smooth nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav ul a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--laranja)' : '';
+    });
+  });
+
+  // Counter animation
+  const counters = document.querySelectorAll('.numero-val');
+  const cIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.animation = 'fadeUp .6s ease both';
+        cIO.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => cIO.observe(c));
+</script>
+</body>
+</html>
